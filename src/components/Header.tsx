@@ -1,14 +1,16 @@
 
 import React from 'react';
+import strawHat from '@/images/straw-hat.png';
+import corn from '@/images/corn.png';
 
 const Header = () => {
   return (
     <header className="bg-orange-500 text-white py-4 md:py-6 relative overflow-hidden">
       <div className="container mx-auto px-4 flex flex-col items-center">
         <div className="flex items-center mb-2">
-          <img src="/images/straw-hat.png" alt="Chapéu de Palha" className="w-12 h-12 md:w-16 md:h-16 mr-3" />
+          <img src={strawHat} alt="Chapéu de Palha" className="w-12 h-12 md:w-16 md:h-16 mr-3" />
           <h1 className="text-2xl md:text-3xl font-bold">Arraiá Presente Certo</h1>
-          <img src="/images/corn.png" alt="Milho" className="w-12 h-12 md:w-16 md:h-16 ml-3" />
+          <img src={corn} alt="Milho" className="w-12 h-12 md:w-16 md:h-16 ml-3" />
         </div>
         <p className="text-base md:text-lg">Lista de Presentes - Chá de Panela Junino</p>
       </div>
