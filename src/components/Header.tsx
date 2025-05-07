@@ -9,10 +9,10 @@ const Header = () => {
       <div className="container mx-auto px-4 flex flex-col items-center">
         <div className="flex items-center mb-2">
           <img src={strawHat} alt="Chapéu de Palha" className="w-12 h-12 md:w-16 md:h-16 mr-3" />
-          <h1 className="text-2xl md:text-3xl font-bold">Arraiá Presente Certo</h1>
+          <h1 className="text-2xl md:text-3xl font-bold">Charraiá Caio & Ester</h1>
           <img src={corn} alt="Milho" className="w-12 h-12 md:w-16 md:h-16 ml-3" />
         </div>
-        <p className="text-base md:text-lg">Lista de Presentes - Chá de Panela Junino</p>
+        <p className="text-base md:text-lg">Lista de Presentes - Charraiá</p>
       </div>
       
       {/* Decorative elements */}
