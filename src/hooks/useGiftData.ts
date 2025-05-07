@@ -120,7 +120,7 @@ const initialGifts: Gift[] = [
     name: "Kit colcha casal 3 peças",
     price: 299.99,
     description: "Kit colcha casal 3 peças soft touch pontos cruzados rosa",
-    imageUrl: "https://static.riachuelo.com.br/RCHLO/15846962001/portrait/25cf32954d9d414307cf47dbef90911d3e2d15b4.jpg",
+    imageUrl: "https://static.riachuelo.com.br/RCHLO/15846997001/portrait/bea2833f622cbffb03041bec85c9d10de099d94f.jpg",
     storeUrl: "https://www.riachuelo.com.br/kit-colcha-casal-3-pecas-soft-touch-pontos-cruzados-rosa-casa-riachuelo-15846962001_sku",
     isReserved: false,
     reservedBy: ''
