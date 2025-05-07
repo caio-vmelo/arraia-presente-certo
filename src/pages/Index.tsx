@@ -40,7 +40,7 @@ const Index = () => {
         <div className="max-w-4xl mx-auto">
           <section className="mb-10 text-center">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-orange-600 mb-4">
-              Chá de Panela Junino
+              Chá de Panela Caio & Ester
             </h1>
             <p className="text-lg md:text-xl text-gray-700 mb-6">
               Ajude os noivos a equipar sua nova casa com muito amor e alegria!
