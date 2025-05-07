@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Gift } from '@/types/gift';
-import { ArrowRight, Gift as GiftIcon, Check } from 'lucide-react';
+import { ArrowRight, Gift as GiftIcon, Check, Tag } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 
 interface GiftItemProps {
@@ -11,7 +10,7 @@ interface GiftItemProps {
 }
 
 const GiftItem: React.FC<GiftItemProps> = ({ gift, onReserve }) => {
-  const { id, name, price, imageUrl, description, storeUrl, isReserved, reservedBy } = gift;
+  const { id, name, price, imageUrl, description, category, storeUrl, isReserved, reservedBy } = gift;
 
   const handleReserveClick = () => {
     if (!isReserved) {
@@ -35,6 +34,12 @@ const GiftItem: React.FC<GiftItemProps> = ({ gift, onReserve }) => {
             </div>
           </div>
         )}
+        <div className="absolute top-2 right-2">
+          <span className="bg-orange-500 text-white text-xs px-2 py-1 rounded-full flex items-center">
+            <Tag className="w-3 h-3 mr-1" />
+            {category}
+          </span>
+        </div>
       </div>
       
       <div className="p-4">
