@@ -261,7 +261,7 @@ export const useGiftData = () => {
 
       // Notify site owner
       await sendOwnerNotificationEmail({
-        recipientEmail: 'meuemail@exemplo.com', // Site owner email
+        recipientEmail: 'viniciuscaioml@gmail.com', // Site owner email
         senderName: name,
         giftName: gift.name
       });

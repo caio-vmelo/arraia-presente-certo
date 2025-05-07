@@ -58,7 +58,7 @@ const GiftItem: React.FC<GiftItemProps> = ({ gift, onReserve }) => {
                 : 'bg-orange-500 hover:bg-orange-600'
             }`}
           >
-            {isReserved ? 'Reservado por ' + reservedBy : 'Reservar'}
+            {isReserved ? 'Reservado' : 'Reservar'}
           </Button>
         </div>
       </div>
