@@ -8,26 +8,60 @@ export interface EmailData {
 }
 
 export const sendReservationEmail = async (data: EmailData): Promise<boolean> => {
-  console.log('Email would be sent with this data:', data);
+  console.log('Email seria enviado com estes dados:', data);
+  console.log('----------------------');
+  console.log('Para: ' + data.recipientEmail);
+  console.log('De: ' + data.senderName);
+  console.log('Presente: ' + data.giftName);
+  console.log('----------------------');
   
-  // In a real implementation, this would connect to an email service
-  // For now, we'll simulate a successful email sending
+  // Em uma implementação real, isso conectaria a um serviço de email
+  // Por enquanto, vamos simular um envio de email bem-sucedido
   return new Promise((resolve) => {
     setTimeout(() => {
-      console.log('Email sent successfully (simulated)');
-      resolve(true);
+      console.log('Email enviado com sucesso (simulado)');
+      return resolve(true);
     }, 800);
   });
 };
 
 export const sendOwnerNotificationEmail = async (data: EmailData): Promise<boolean> => {
-  console.log('Owner notification would be sent with this data:', data);
+  console.log('Notificação do proprietário seria enviada com estes dados:', data);
+  console.log('----------------------');
+  console.log('Para: proprietario@exemplo.com');
+  console.log('De: ' + data.senderName);
+  console.log('Presente reservado: ' + data.giftName);
+  console.log('----------------------');
   
-  // Simulate sending notification to the site owner
+  // Simular o envio de notificação para o proprietário do site
   return new Promise((resolve) => {
     setTimeout(() => {
-      console.log('Owner notification sent successfully (simulated)');
-      resolve(true);
+      console.log('Notificação do proprietário enviada com sucesso (simulado)');
+      return resolve(true);
     }, 800);
   });
+};
+
+// Função de teste para verificar se o envio de email está funcionando
+export const testEmailService = async (): Promise<boolean> => {
+  const testData = {
+    recipientEmail: 'teste@exemplo.com',
+    senderName: 'Usuário de Teste',
+    giftName: 'Presente de Teste'
+  };
+  
+  console.log('TESTANDO SERVIÇO DE EMAIL');
+  
+  try {
+    // Testa o envio de email de reserva
+    const emailSent = await sendReservationEmail(testData);
+    
+    // Testa o envio de notificação ao proprietário
+    const notificationSent = await sendOwnerNotificationEmail(testData);
+    
+    return emailSent && notificationSent;
+  } catch (error) {
+    console.error('Erro ao testar o serviço de email:', error);
+    return false;
+  }
 };

@@ -2,7 +2,8 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Gift } from '@/types/gift';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Gift as GiftIcon, Check } from 'lucide-react';
+import { toast } from '@/components/ui/use-toast';
 
 interface GiftItemProps {
   gift: Gift;
@@ -11,6 +12,12 @@ interface GiftItemProps {
 
 const GiftItem: React.FC<GiftItemProps> = ({ gift, onReserve }) => {
   const { id, name, price, imageUrl, description, storeUrl, isReserved, reservedBy } = gift;
+
+  const handleReserveClick = () => {
+    if (!isReserved) {
+      onReserve(id);
+    }
+  };
 
   return (
     <div className={`bg-white rounded-lg shadow-md overflow-hidden border-2 transition-all duration-300 ${isReserved ? 'border-gray-300' : 'border-orange-400 hover:shadow-lg'}`}>
@@ -22,7 +29,8 @@ const GiftItem: React.FC<GiftItemProps> = ({ gift, onReserve }) => {
         />
         {isReserved && (
           <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="bg-red-500 text-white font-bold py-2 px-4 rounded-full transform -rotate-12">
+            <div className="bg-red-500 text-white font-bold py-2 px-4 rounded-full transform -rotate-12 flex items-center">
+              <Check className="w-4 h-4 mr-1" />
               Reservado
             </div>
           </div>
@@ -37,6 +45,7 @@ const GiftItem: React.FC<GiftItemProps> = ({ gift, onReserve }) => {
           <span className="font-medium text-gray-700">
             {price ? `R$ ${price.toFixed(2)}` : 'Preço variável'}
           </span>
+          <GiftIcon className="w-5 h-5 text-orange-500" />
         </div>
         
         <div className="space-y-2">
@@ -50,7 +59,7 @@ const GiftItem: React.FC<GiftItemProps> = ({ gift, onReserve }) => {
           </a>
           
           <Button
-            onClick={() => !isReserved && onReserve(id)}
+            onClick={handleReserveClick}
             disabled={isReserved}
             className={`w-full ${
               isReserved 
