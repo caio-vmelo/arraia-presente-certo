@@ -8,4 +8,5 @@ export interface Gift {
   storeUrl: string;
   isReserved: boolean;
   reservedBy: string;
+  category: string;
 }
