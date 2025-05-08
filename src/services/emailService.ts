@@ -32,7 +32,7 @@ export const sendReservationEmail = async (data: EmailData): Promise<boolean> =>
     };
     
     // If EmailJS credentials are configured, send a real email
-    if (EMAILJS_PUBLIC_KEY !== 'KP09pLKLOJbdflwBa') {
+    if (isEmailConfigured()) {
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
@@ -78,7 +78,7 @@ export const sendOwnerNotificationEmail = async (data: EmailData): Promise<boole
     };
     
     // If EmailJS credentials are configured, send a real email
-    if (EMAILJS_PUBLIC_KEY !== 'KP09pLKLOJbdflwBa') {
+    if (isEmailConfigured()) {
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
@@ -113,6 +113,7 @@ export const testEmailService = async (): Promise<boolean> => {
   };
   
   console.log('TESTANDO SERVIÇO DE EMAIL');
+  console.log('Status de configuração do EmailJS:', isEmailConfigured() ? 'Configurado' : 'Não configurado');
   
   try {
     // Testa o envio de email de reserva
@@ -132,3 +133,4 @@ export const testEmailService = async (): Promise<boolean> => {
 export const isEmailConfigured = (): boolean => {
   return EMAILJS_PUBLIC_KEY !== 'KP09pLKLOJbdflwBa';
 };
+
