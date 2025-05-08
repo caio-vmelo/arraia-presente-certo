@@ -4,7 +4,7 @@ import emailjs from 'emailjs-com';
 // Email service configuration
 const EMAILJS_SERVICE_ID = 'service_gmail'; // You'll need to replace with your EmailJS service ID
 const EMAILJS_TEMPLATE_ID = 'template_gift_reservation'; // You'll need to replace with your template ID
-const EMAILJS_USER_ID = 'YOUR_USER_ID'; // You'll need to replace with your EmailJS user ID
+const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY'; // You'll need to replace with your EmailJS public key
 
 export interface EmailData {
   recipientEmail: string;
@@ -32,12 +32,12 @@ export const sendReservationEmail = async (data: EmailData): Promise<boolean> =>
     };
     
     // If EmailJS credentials are configured, send a real email
-    if (EMAILJS_USER_ID !== 'YOUR_USER_ID') {
+    if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         templateParams,
-        EMAILJS_USER_ID
+        EMAILJS_PUBLIC_KEY
       );
       console.log('Email enviado com sucesso via EmailJS');
       return true;
@@ -78,12 +78,12 @@ export const sendOwnerNotificationEmail = async (data: EmailData): Promise<boole
     };
     
     // If EmailJS credentials are configured, send a real email
-    if (EMAILJS_USER_ID !== 'YOUR_USER_ID') {
+    if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         templateParams,
-        EMAILJS_USER_ID
+        EMAILJS_PUBLIC_KEY
       );
       console.log('Notificação enviada com sucesso via EmailJS');
       return true;
@@ -130,5 +130,5 @@ export const testEmailService = async (): Promise<boolean> => {
 
 // Function to check if EmailJS is properly configured
 export const isEmailConfigured = (): boolean => {
-  return EMAILJS_USER_ID !== 'YOUR_USER_ID';
+  return EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY';
 };
