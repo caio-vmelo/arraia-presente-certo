@@ -1,3 +1,4 @@
+
 // src/pages/Index.tsx
 import React from 'react';
 import Header from '@/components/Header';
@@ -6,6 +7,7 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { testEmailService } from '@/services/emailService';
 import { toast } from '@/hooks/use-toast';
+import EmailSetupGuide from '@/components/EmailSetupGuide';
 
 const Index = () => {
   const handleTestEmail = async () => {
@@ -54,7 +56,9 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="mt-6 mb-8">
+            <div className="mt-8 mb-8">
+              <EmailSetupGuide />
+              
               <Button 
                 onClick={handleTestEmail} 
                 variant="outline" 

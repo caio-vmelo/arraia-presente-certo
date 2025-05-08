@@ -1,5 +1,10 @@
 
-// Simple email service placeholder - can be replaced with a working email service later
+import emailjs from 'emailjs-com';
+
+// Email service configuration
+const EMAILJS_SERVICE_ID = 'service_gmail'; // You'll need to replace with your EmailJS service ID
+const EMAILJS_TEMPLATE_ID = 'template_gift_reservation'; // You'll need to replace with your template ID
+const EMAILJS_USER_ID = 'YOUR_USER_ID'; // You'll need to replace with your EmailJS user ID
 
 export interface EmailData {
   recipientEmail: string;
@@ -7,42 +12,99 @@ export interface EmailData {
   giftName: string;
 }
 
+// Function to send reservation confirmation to the person who reserved the gift
 export const sendReservationEmail = async (data: EmailData): Promise<boolean> => {
-  console.log('Email seria enviado com estes dados:', data);
+  console.log('Enviando email com estes dados:', data);
   console.log('----------------------');
   console.log('Para: ' + data.recipientEmail);
   console.log('De: ' + data.senderName);
   console.log('Presente: ' + data.giftName);
   console.log('----------------------');
   
-  // Em uma implementação real, isso conectaria a um serviço de email
-  // Por enquanto, vamos simular um envio de email bem-sucedido
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log('Email enviado com sucesso (simulado)');
-      return resolve(true);
-    }, 800);
-  });
+  try {
+    // Template parameters for EmailJS
+    const templateParams = {
+      to_email: data.recipientEmail,
+      from_name: 'Chá de Panela Junino',
+      to_name: data.senderName,
+      gift_name: data.giftName,
+      message: `Você reservou com sucesso o presente: ${data.giftName}. Obrigado por sua contribuição!`
+    };
+    
+    // If EmailJS credentials are configured, send a real email
+    if (EMAILJS_USER_ID !== 'YOUR_USER_ID') {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams,
+        EMAILJS_USER_ID
+      );
+      console.log('Email enviado com sucesso via EmailJS');
+      return true;
+    } else {
+      // Simulation mode - just log the data
+      console.log('EMAIL SIMULADO (EmailJS não configurado)');
+      console.log('Parâmetros do template:', templateParams);
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          console.log('Email simulado enviado com sucesso');
+          return resolve(true);
+        }, 800);
+      });
+    }
+  } catch (error) {
+    console.error('Erro ao enviar email:', error);
+    return false;
+  }
 };
 
+// Function to notify the site owner about the reservation
 export const sendOwnerNotificationEmail = async (data: EmailData): Promise<boolean> => {
-  console.log('Notificação do proprietário seria enviada com estes dados:', data);
+  console.log('Enviando notificação para o proprietário com estes dados:', data);
   console.log('----------------------');
-  console.log('Para: proprietario@exemplo.com');
+  console.log('Para: viniciuscaioml@gmail.com');
   console.log('De: ' + data.senderName);
   console.log('Presente reservado: ' + data.giftName);
   console.log('----------------------');
   
-  // Simular o envio de notificação para o proprietário do site
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log('Notificação do proprietário enviada com sucesso (simulado)');
-      return resolve(true);
-    }, 800);
-  });
+  try {
+    // Template parameters for EmailJS
+    const templateParams = {
+      to_email: 'viniciuscaioml@gmail.com', // Site owner email
+      from_name: data.senderName,
+      to_name: 'Proprietário',
+      gift_name: data.giftName,
+      message: `O presente "${data.giftName}" foi reservado por ${data.senderName} (${data.recipientEmail}).`
+    };
+    
+    // If EmailJS credentials are configured, send a real email
+    if (EMAILJS_USER_ID !== 'YOUR_USER_ID') {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams,
+        EMAILJS_USER_ID
+      );
+      console.log('Notificação enviada com sucesso via EmailJS');
+      return true;
+    } else {
+      // Simulation mode - just log the data
+      console.log('NOTIFICAÇÃO SIMULADA (EmailJS não configurado)');
+      console.log('Parâmetros do template:', templateParams);
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          console.log('Notificação simulada enviada com sucesso');
+          return resolve(true);
+        }, 800);
+      });
+    }
+  } catch (error) {
+    console.error('Erro ao enviar notificação:', error);
+    return false;
+  }
 };
 
-// Função de teste para verificar se o envio de email está funcionando
+// Function to test the email service
 export const testEmailService = async (): Promise<boolean> => {
   const testData = {
     recipientEmail: 'teste@exemplo.com',
@@ -64,4 +126,9 @@ export const testEmailService = async (): Promise<boolean> => {
     console.error('Erro ao testar o serviço de email:', error);
     return false;
   }
+};
+
+// Function to check if EmailJS is properly configured
+export const isEmailConfigured = (): boolean => {
+  return EMAILJS_USER_ID !== 'YOUR_USER_ID';
 };
