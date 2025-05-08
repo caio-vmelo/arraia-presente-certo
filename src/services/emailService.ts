@@ -20,6 +20,11 @@ export const sendReservationEmail = async (data: EmailData): Promise<boolean> =>
   console.log('De: ' + data.senderName);
   console.log('Presente: ' + data.giftName);
   console.log('----------------------');
+  console.log('Usando EmailJS com:');
+  console.log('Service ID:', EMAILJS_SERVICE_ID);
+  console.log('Template ID:', EMAILJS_TEMPLATE_ID);
+  console.log('Public Key:', EMAILJS_PUBLIC_KEY.substring(0, 3) + '...' + EMAILJS_PUBLIC_KEY.substring(EMAILJS_PUBLIC_KEY.length - 3));
+  console.log('----------------------');
   
   try {
     // Template parameters for EmailJS
@@ -33,13 +38,13 @@ export const sendReservationEmail = async (data: EmailData): Promise<boolean> =>
     
     // If EmailJS credentials are configured, send a real email
     if (isEmailConfigured()) {
-      await emailjs.send(
+      const response = await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         templateParams,
         EMAILJS_PUBLIC_KEY
       );
-      console.log('Email enviado com sucesso via EmailJS');
+      console.log('Email enviado com sucesso via EmailJS', response);
       return true;
     } else {
       // Simulation mode - just log the data
@@ -79,13 +84,13 @@ export const sendOwnerNotificationEmail = async (data: EmailData): Promise<boole
     
     // If EmailJS credentials are configured, send a real email
     if (isEmailConfigured()) {
-      await emailjs.send(
+      const response = await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         templateParams,
         EMAILJS_PUBLIC_KEY
       );
-      console.log('Notificação enviada com sucesso via EmailJS');
+      console.log('Notificação enviada com sucesso via EmailJS', response);
       return true;
     } else {
       // Simulation mode - just log the data
@@ -133,4 +138,3 @@ export const testEmailService = async (): Promise<boolean> => {
 export const isEmailConfigured = (): boolean => {
   return EMAILJS_PUBLIC_KEY !== 'KP09pLKLOJbdflwBa';
 };
-
