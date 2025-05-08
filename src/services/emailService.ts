@@ -3,7 +3,7 @@ import emailjs from 'emailjs-com';
 
 // Email service configuration
 const EMAILJS_SERVICE_ID = 'service_6k88u3n'; // You'll need to replace with your EmailJS service ID
-const EMAILJS_TEMPLATE_ID = 'template_poiworv'; // You'll need to replace with your template ID
+const EMAILJS_TEMPLATE_ID = 'template_y9xic6e'; // You'll need to replace with your template ID
 const EMAILJS_PUBLIC_KEY = 'KP09pLKLOJbdflwBa'; // You'll need to replace with your EmailJS public key
 
 export interface EmailData {
@@ -107,7 +107,7 @@ export const sendOwnerNotificationEmail = async (data: EmailData): Promise<boole
 // Function to test the email service
 export const testEmailService = async (): Promise<boolean> => {
   const testData = {
-    recipientEmail: 'teste@exemplo.com',
+    recipientEmail: 'kapu061@gmail.com',
     senderName: 'Usuário de Teste',
     giftName: 'Presente de Teste'
   };
