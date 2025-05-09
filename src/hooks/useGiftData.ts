@@ -296,7 +296,7 @@ export const useGiftData = () => {
     try {
       console.log(`Attempting to send reservation email to ${email} for gift: ${gift.name}`);
       
-      // Send emails (this would connect to a real email service in production)
+      // Send confirmation email
       const emailSent = await sendReservationEmail({
         recipientEmail: email,
         senderName: name,

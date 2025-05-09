@@ -27,16 +27,18 @@ export const sendReservationEmail = async (data: EmailData): Promise<boolean> =>
   console.log('----------------------');
   
   try {
-    // In EmailJS template, you may need to use specific parameter names
+    // EmailJS expects certain parameters for their templates
+    // Make sure these match EXACTLY what your EmailJS template is expecting
     const templateParams = {
-      to_email: data.recipientEmail,
       to_name: data.senderName,
       from_name: 'Chá de Panela Junino',
       gift_name: data.giftName,
       message: `Você reservou com sucesso o presente: ${data.giftName}. Obrigado por sua contribuição!`,
-      reply_to: 'noreply@example.com',
-      // Add this extra parameter that EmailJS might be expecting
-      recipient: data.recipientEmail
+      user_email: data.recipientEmail, // Try this format instead
+      email: data.recipientEmail,      // Try alternative format
+      to_email: data.recipientEmail,   // Try another format EmailJS might expect
+      recipient: data.recipientEmail,  // One more format to try
+      reply_to: 'noreply@example.com'
     };
     
     console.log('Parâmetros do template:', templateParams);
@@ -72,14 +74,15 @@ export const sendOwnerNotificationEmail = async (data: EmailData): Promise<boole
   try {
     // Make sure we use the correct parameter names for EmailJS
     const templateParams = {
-      to_email: 'viniciuscaioml@gmail.com', // Site owner email
       to_name: 'Proprietário',
       from_name: data.senderName,
       gift_name: data.giftName,
       message: `O presente "${data.giftName}" foi reservado por ${data.senderName} (${data.recipientEmail}).`,
-      reply_to: data.recipientEmail,
-      // Add this extra parameter that EmailJS might be expecting
-      recipient: 'viniciuscaioml@gmail.com'
+      user_email: 'viniciuscaioml@gmail.com', // Try this format
+      email: 'viniciuscaioml@gmail.com',      // Try alternative format
+      to_email: 'viniciuscaioml@gmail.com',   // Try another format EmailJS might expect
+      recipient: 'viniciuscaioml@gmail.com',  // One more format to try
+      reply_to: data.recipientEmail
     };
     
     console.log('Parâmetros do template:', templateParams);
