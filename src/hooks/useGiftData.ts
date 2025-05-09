@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Gift } from '@/types/gift';
 import { sendReservationEmail, sendOwnerNotificationEmail } from '@/services/emailService';
@@ -293,6 +294,8 @@ export const useGiftData = () => {
     }
 
     try {
+      console.log(`Attempting to send reservation email to ${email} for gift: ${gift.name}`);
+      
       // Send emails (this would connect to a real email service in production)
       const emailSent = await sendReservationEmail({
         recipientEmail: email,
@@ -305,6 +308,8 @@ export const useGiftData = () => {
         throw new Error('Failed to send confirmation email');
       }
 
+      console.log('Reservation email sent successfully, now notifying owner');
+      
       // Notify site owner
       const ownerNotified = await sendOwnerNotificationEmail({
         recipientEmail: email, // Pass the user's email for reply_to
@@ -316,6 +321,8 @@ export const useGiftData = () => {
         console.warn('Failed to send notification to owner, but continuing with reservation');
       }
 
+      console.log('All emails sent successfully, updating gift status');
+      
       // Update gift status
       const updatedGifts = gifts.map(g => 
         g.id === giftId ? { ...g, isReserved: true, reservedBy: name } : g
