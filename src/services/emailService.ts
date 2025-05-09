@@ -27,21 +27,20 @@ export const sendReservationEmail = async (data: EmailData): Promise<boolean> =>
   console.log('----------------------');
   
   try {
-    // Template parameters for EmailJS
-    // Important: EmailJS requires "to_email" as parameter for recipient
+    // In EmailJS, the recipient is set through the template parameter
+    // The issue was likely that EmailJS expects the email in a specific format
     const templateParams = {
       to_email: data.recipientEmail,
-      from_name: 'Chá de Panela Junino',
       to_name: data.senderName,
+      from_name: 'Chá de Panela Junino',
       gift_name: data.giftName,
       message: `Você reservou com sucesso o presente: ${data.giftName}. Obrigado por sua contribuição!`,
-      // Adding reply_to to ensure proper email routing
       reply_to: 'noreply@example.com'
     };
     
     console.log('Parâmetros do template:', templateParams);
     
-    // Always send a real email since we're using our configured service
+    // Send using EmailJS API
     const response = await emailjs.send(
       EMAILJS_SERVICE_ID,
       EMAILJS_TEMPLATE_ID,
@@ -52,6 +51,9 @@ export const sendReservationEmail = async (data: EmailData): Promise<boolean> =>
     return true;
   } catch (error) {
     console.error('Erro ao enviar email:', error);
+    if (error && typeof error === 'object' && 'text' in error) {
+      console.error('Resposta do servidor EmailJS:', (error as any).text);
+    }
     console.error('Detalhes do erro:', JSON.stringify(error));
     return false;
   }
@@ -67,21 +69,19 @@ export const sendOwnerNotificationEmail = async (data: EmailData): Promise<boole
   console.log('----------------------');
   
   try {
-    // Template parameters for EmailJS
-    // Important: EmailJS requires "to_email" as parameter for recipient
+    // Make sure we use the correct parameter names for EmailJS
     const templateParams = {
       to_email: 'viniciuscaioml@gmail.com', // Site owner email
-      from_name: data.senderName,
       to_name: 'Proprietário',
+      from_name: data.senderName,
       gift_name: data.giftName,
       message: `O presente "${data.giftName}" foi reservado por ${data.senderName} (${data.recipientEmail}).`,
-      // Adding reply_to parameter
       reply_to: data.recipientEmail
     };
     
     console.log('Parâmetros do template:', templateParams);
     
-    // Always send a real email since we're using our configured service
+    // Send using EmailJS API
     const response = await emailjs.send(
       EMAILJS_SERVICE_ID,
       EMAILJS_TEMPLATE_ID,
@@ -92,6 +92,9 @@ export const sendOwnerNotificationEmail = async (data: EmailData): Promise<boole
     return true;
   } catch (error) {
     console.error('Erro ao enviar notificação:', error);
+    if (error && typeof error === 'object' && 'text' in error) {
+      console.error('Resposta do servidor EmailJS:', (error as any).text);
+    }
     console.error('Detalhes do erro:', JSON.stringify(error));
     return false;
   }
@@ -120,9 +123,6 @@ export const testEmailService = async (): Promise<boolean> => {
     return false;
   }
 };
-
-// Removemos a verificação de configuração já que estamos sempre utilizando
-// os valores de configuração fornecidos diretamente
 
 export const isEmailConfigured = (): boolean => {
   return EMAILJS_PUBLIC_KEY !== 'KP09pLKLOJbdflwBa';
