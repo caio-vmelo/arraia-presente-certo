@@ -294,18 +294,27 @@ export const useGiftData = () => {
 
     try {
       // Send emails (this would connect to a real email service in production)
-      await sendReservationEmail({
+      const emailSent = await sendReservationEmail({
         recipientEmail: email,
         senderName: name,
         giftName: gift.name
       });
 
+      if (!emailSent) {
+        console.error('Failed to send reservation email');
+        throw new Error('Failed to send confirmation email');
+      }
+
       // Notify site owner
-      await sendOwnerNotificationEmail({
-        recipientEmail: 'viniciuscaioml@gmail.com', // Site owner email
+      const ownerNotified = await sendOwnerNotificationEmail({
+        recipientEmail: email, // Pass the user's email for reply_to
         senderName: name,
         giftName: gift.name
       });
+
+      if (!ownerNotified) {
+        console.warn('Failed to send notification to owner, but continuing with reservation');
+      }
 
       // Update gift status
       const updatedGifts = gifts.map(g => 

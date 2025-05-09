@@ -1,3 +1,4 @@
+
 import emailjs from 'emailjs-com';
 
 // Email service configuration
@@ -27,13 +28,18 @@ export const sendReservationEmail = async (data: EmailData): Promise<boolean> =>
   
   try {
     // Template parameters for EmailJS
+    // Important: EmailJS requires "to_email" as parameter for recipient
     const templateParams = {
       to_email: data.recipientEmail,
       from_name: 'Chá de Panela Junino',
       to_name: data.senderName,
       gift_name: data.giftName,
-      message: `Você reservou com sucesso o presente: ${data.giftName}. Obrigado por sua contribuição!`
+      message: `Você reservou com sucesso o presente: ${data.giftName}. Obrigado por sua contribuição!`,
+      // Adding reply_to to ensure proper email routing
+      reply_to: 'noreply@example.com'
     };
+    
+    console.log('Parâmetros do template:', templateParams);
     
     // Always send a real email since we're using our configured service
     const response = await emailjs.send(
@@ -46,6 +52,7 @@ export const sendReservationEmail = async (data: EmailData): Promise<boolean> =>
     return true;
   } catch (error) {
     console.error('Erro ao enviar email:', error);
+    console.error('Detalhes do erro:', JSON.stringify(error));
     return false;
   }
 };
@@ -61,13 +68,18 @@ export const sendOwnerNotificationEmail = async (data: EmailData): Promise<boole
   
   try {
     // Template parameters for EmailJS
+    // Important: EmailJS requires "to_email" as parameter for recipient
     const templateParams = {
       to_email: 'viniciuscaioml@gmail.com', // Site owner email
       from_name: data.senderName,
       to_name: 'Proprietário',
       gift_name: data.giftName,
-      message: `O presente "${data.giftName}" foi reservado por ${data.senderName} (${data.recipientEmail}).`
+      message: `O presente "${data.giftName}" foi reservado por ${data.senderName} (${data.recipientEmail}).`,
+      // Adding reply_to parameter
+      reply_to: data.recipientEmail
     };
+    
+    console.log('Parâmetros do template:', templateParams);
     
     // Always send a real email since we're using our configured service
     const response = await emailjs.send(
@@ -80,6 +92,7 @@ export const sendOwnerNotificationEmail = async (data: EmailData): Promise<boole
     return true;
   } catch (error) {
     console.error('Erro ao enviar notificação:', error);
+    console.error('Detalhes do erro:', JSON.stringify(error));
     return false;
   }
 };
