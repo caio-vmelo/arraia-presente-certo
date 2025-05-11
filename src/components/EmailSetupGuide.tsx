@@ -21,8 +21,8 @@ const EmailSetupGuide: React.FC = () => {
             </p>
             <ol className="list-decimal ml-6 space-y-2">
               <li>Crie uma conta gratuita no <a href="https://www.emailjs.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">EmailJS</a></li>
-              <li>Crie um serviço conectando sua conta de Gmail</li>
-              <li>Crie um template de email com as variáveis: to_email, from_name, to_name, gift_name, message</li>
+              <li>Crie um serviço conectando sua conta de email (Gmail, Outlook, ou outros)</li>
+              <li>Crie um template de email com as variáveis: recipient_email ou to_email, from_name, to_name, gift_name, message</li>
               <li>Atualize o arquivo <code>src/services/emailService.ts</code> com seu Service ID, Template ID e Public Key</li>
             </ol>
             <Button
