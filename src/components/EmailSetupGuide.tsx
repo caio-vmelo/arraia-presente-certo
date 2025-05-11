@@ -1,10 +1,9 @@
 
 import React from 'react';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
 import { isEmailConfigured } from '@/services/emailService';
-import { ExternalLink } from 'lucide-react';
 
+// Este componente foi mantido para uso interno mas removido da UI pública
 const EmailSetupGuide: React.FC = () => {
   const emailConfigured = isEmailConfigured();
   
@@ -25,14 +24,6 @@ const EmailSetupGuide: React.FC = () => {
               <li>Crie um template de email com as variáveis: recipient_email ou to_email, from_name, to_name, gift_name, message</li>
               <li>Atualize o arquivo <code>src/services/emailService.ts</code> com seu Service ID, Template ID e Public Key</li>
             </ol>
-            <Button
-              variant="outline"
-              className="mt-2 flex items-center"
-              onClick={() => window.open('https://www.emailjs.com/docs/tutorial/overview/', '_blank')}
-            >
-              <span>Ver tutorial do EmailJS</span>
-              <ExternalLink className="ml-2 h-4 w-4" />
-            </Button>
           </div>
         ) : (
           <p>O serviço de email está configurado e pronto para uso!</p>

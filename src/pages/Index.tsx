@@ -4,37 +4,8 @@ import React from 'react';
 import Header from '@/components/Header';
 import GiftList from '@/components/GiftList';
 import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { testEmailService } from '@/services/emailService';
-import { toast } from '@/hooks/use-toast';
-import EmailSetupGuide from '@/components/EmailSetupGuide';
 
 const Index = () => {
-  const handleTestEmail = async () => {
-    try {
-      const result = await testEmailService();
-      if (result) {
-        toast({
-          title: "Teste de email",
-          description: "Emails de teste enviados com sucesso. Verifique o console!",
-        });
-      } else {
-        toast({
-          title: "Erro no teste",
-          description: "Houve um problema no envio de email. Verifique o console!",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      console.error("Erro ao testar email:", error);
-      toast({
-        title: "Erro no teste",
-        description: "Houve um erro ao testar o email. Verifique o console!",
-        variant: "destructive",
-      });
-    }
-  };
-
   return (
     <div className="min-h-screen bg-amber-50 flex flex-col">
       <Header />
@@ -54,18 +25,6 @@ const Index = () => {
                   É só preencher seus dados e pronto! Você pode comprar online ou levar no dia da festa.
                 </p>
               </div>
-            </div>
-            
-            <div className="mt-8 mb-8">
-              <EmailSetupGuide />
-              
-              <Button 
-                onClick={handleTestEmail} 
-                variant="outline" 
-                className="bg-blue-500 hover:bg-blue-600 text-white"
-              >
-                Testar Serviço de Email
-              </Button>
             </div>
           </section>
           
