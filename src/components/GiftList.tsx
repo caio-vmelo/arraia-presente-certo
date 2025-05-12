@@ -60,16 +60,6 @@ const GiftList: React.FC = () => {
 
   return (
     <div>
-      <div className="mb-8">
-        <Alert className="bg-blue-50 border border-blue-200 shadow-sm">
-          <Landmark className="h-5 w-5 text-blue-600" />
-          <AlertDescription className="text-blue-800">
-            <span className="font-semibold">Prefere contribuir com um valor? </span> 
-            Faça um PIX para: <span className="font-semibold select-all">viniciuscaioml@gmail.com</span>
-          </AlertDescription>
-        </Alert>
-      </div>
-      
       <CategoryFilter 
         categories={categories} 
         selectedCategory={selectedCategory} 
