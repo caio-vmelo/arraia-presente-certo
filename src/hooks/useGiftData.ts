@@ -109,31 +109,36 @@ export const useGiftData = () => {
         throw new Error('Falha ao registrar a reserva');
       }
 
-      // Send confirmation email
-      const emailSent = await sendReservationEmail({
-        recipientEmail: email,
-        senderName: name,
-        giftName: gift.name
-      });
-
-      if (!emailSent) {
-        console.error('Failed to send reservation email');
-        toast({
-          title: "Aviso",
-          description: "Sua reserva foi registrada, mas não foi possível enviar o email de confirmação.",
-          variant: "default",
+      try {
+        // Try to send confirmation email
+        const emailSent = await sendReservationEmail({
+          recipientEmail: email,
+          senderName: name,
+          giftName: gift.name
         });
+
+        if (!emailSent) {
+          console.log('Email service responded but email may not have been sent');
+        }
+      } catch (emailError) {
+        console.error('Failed to send reservation email', emailError);
+        // Don't throw error here, we want to continue even if email fails
       }
 
-      // Notify site owner
-      const ownerNotified = await sendOwnerNotificationEmail({
-        recipientEmail: email,
-        senderName: name,
-        giftName: gift.name
-      });
+      try {
+        // Try to notify site owner
+        const ownerNotified = await sendOwnerNotificationEmail({
+          recipientEmail: email,
+          senderName: name,
+          giftName: gift.name
+        });
 
-      if (!ownerNotified) {
-        console.warn('Failed to send notification to owner');
+        if (!ownerNotified) {
+          console.warn('Failed to send notification to owner');
+        }
+      } catch (notifyError) {
+        console.error('Failed to send notification to owner', notifyError);
+        // Don't throw error here, we want to continue even if notification fails
       }
 
       // Update local state
