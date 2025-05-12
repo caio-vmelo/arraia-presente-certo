@@ -85,10 +85,18 @@ const ReservationModal: React.FC<ReservationModalProps> = ({
           </DialogDescription>
         </DialogHeader>
         
+        <Alert className="bg-yellow-50 border-yellow-200 mb-4">
+          <AlertCircle className="h-4 w-4 text-yellow-600" />
+          <AlertDescription className="text-yellow-700">
+            <strong>Importante:</strong> Por gentileza, reserve apenas se você realmente pretende comprar o item. 
+            Caso contrário, outra pessoa pode perder a oportunidade de presentear os noivos.
+          </AlertDescription>
+        </Alert>
+        
         <Alert className="bg-blue-50 border-blue-200 mb-4">
-          <AlertCircle className="h-4 w-4 text-blue-600" />
+          <Landmark className="h-4 w-4 text-blue-600" />
           <AlertDescription className="text-blue-600">
-            Caso prefira contribuir com um valor em dinheiro, você pode fazer um PIX para: <span className="font-semibold">viniciuscaioml@gmail.com</span>
+            Caso prefira contribuir com um valor em dinheiro, você pode fazer um PIX para: <span className="font-semibold select-all">viniciuscaioml@gmail.com</span>
           </AlertDescription>
         </Alert>
         

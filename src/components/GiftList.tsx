@@ -1,3 +1,4 @@
+
 // src/components/GiftList.tsx
 import React, { useState } from 'react';
 import GiftItem from './GiftItem';
@@ -5,7 +6,8 @@ import CategoryFilter from './CategoryFilter';
 import { useGiftData } from '@/hooks/useGiftData';
 import ReservationModal from './ReservationModal';
 import { toast } from '@/hooks/use-toast';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Landmark } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const GiftList: React.FC = () => {
   const { gifts, categories, getGiftsByCategory, reserveGift, loading } = useGiftData();
@@ -28,11 +30,15 @@ const GiftList: React.FC = () => {
     if (!selectedGiftId) return;
     
     try {
+      const selectedGift = gifts.find(gift => gift.id === selectedGiftId);
+      if (!selectedGift) throw new Error("Presente não encontrado");
+      
       await reserveGift(selectedGiftId, name, email);
       setIsModalOpen(false);
+      
       toast({
-        title: "Presente reservado!",
-        description: "Obrigado por reservar este presente. Um email foi enviado para sua confirmação.",
+        title: "Presente reservado com sucesso!",
+        description: `Sua reserva para "${selectedGift.name}" foi registrada. Obrigado!`,
       });
     } catch (error) {
       console.error('Error during reservation:', error);
@@ -54,6 +60,16 @@ const GiftList: React.FC = () => {
 
   return (
     <div>
+      <div className="mb-8">
+        <Alert className="bg-blue-50 border border-blue-200 shadow-sm">
+          <Landmark className="h-5 w-5 text-blue-600" />
+          <AlertDescription className="text-blue-800">
+            <span className="font-semibold">Prefere contribuir com um valor? </span> 
+            Faça um PIX para: <span className="font-semibold select-all">viniciuscaioml@gmail.com</span>
+          </AlertDescription>
+        </Alert>
+      </div>
+      
       <CategoryFilter 
         categories={categories} 
         selectedCategory={selectedCategory} 

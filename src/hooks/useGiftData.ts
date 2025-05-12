@@ -108,43 +108,33 @@ export const useGiftData = () => {
         console.error('Error adding reservation:', insertError);
         throw new Error('Falha ao registrar a reserva');
       }
-
-      try {
-        // Try to send confirmation email
-        const emailSent = await sendReservationEmail({
-          recipientEmail: email,
-          senderName: name,
-          giftName: gift.name
-        });
-
-        if (!emailSent) {
-          console.log('Email service responded but email may not have been sent');
-        }
-      } catch (emailError) {
-        console.error('Failed to send reservation email', emailError);
-        // Don't throw error here, we want to continue even if email fails
-      }
-
-      try {
-        // Try to notify site owner
-        const ownerNotified = await sendOwnerNotificationEmail({
-          recipientEmail: email,
-          senderName: name,
-          giftName: gift.name
-        });
-
-        if (!ownerNotified) {
-          console.warn('Failed to send notification to owner');
-        }
-      } catch (notifyError) {
-        console.error('Failed to send notification to owner', notifyError);
-        // Don't throw error here, we want to continue even if notification fails
-      }
-
-      // Update local state
+      
+      // Update local state before trying to send emails
       setGifts(prevGifts => prevGifts.map(g => 
         g.id === giftId ? { ...g, isReserved: true, reservedBy: name } : g
       ));
+
+      // Try to send confirmation email - but don't block the reservation if it fails
+      try {
+        await sendReservationEmail({
+          recipientEmail: email,
+          senderName: name,
+          giftName: gift.name
+        });
+      } catch (emailError) {
+        console.error('Failed to send reservation email', emailError);
+      }
+
+      // Try to notify site owner - but don't block the reservation if it fails
+      try {
+        await sendOwnerNotificationEmail({
+          recipientEmail: email,
+          senderName: name,
+          giftName: gift.name
+        });
+      } catch (notifyError) {
+        console.error('Failed to send notification to owner', notifyError);
+      }
 
       return Promise.resolve();
     } catch (error) {
