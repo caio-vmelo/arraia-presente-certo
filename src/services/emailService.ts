@@ -14,17 +14,17 @@ export interface EmailData {
 
 // Function to send reservation confirmation to the person who reserved the gift
 export const sendReservationEmail = async (data: EmailData): Promise<boolean> => {
-  console.log('Enviando email com estes dados:', data);
-  console.log('----------------------');
-  console.log('Para: ' + data.recipientEmail);
-  console.log('De: ' + data.senderName);
-  console.log('Presente: ' + data.giftName);
-  console.log('----------------------');
-  console.log('Usando EmailJS com:');
-  console.log('Service ID:', EMAILJS_SERVICE_ID);
-  console.log('Template ID:', EMAILJS_TEMPLATE_ID);
-  console.log('Public Key:', EMAILJS_PUBLIC_KEY.substring(0, 3) + '...' + EMAILJS_PUBLIC_KEY.substring(EMAILJS_PUBLIC_KEY.length - 3));
-  console.log('----------------------');
+  // console.log('Enviando email com estes dados:', data);
+  // console.log('----------------------');
+  // console.log('Para: ' + data.recipientEmail);
+  // console.log('De: ' + data.senderName);
+  // console.log('Presente: ' + data.giftName);
+  // console.log('----------------------');
+  // console.log('Usando EmailJS com:');
+  // console.log('Service ID:', EMAILJS_SERVICE_ID);
+  // console.log('Template ID:', EMAILJS_TEMPLATE_ID);
+  // console.log('Public Key:', EMAILJS_PUBLIC_KEY.substring(0, 3) + '...' + EMAILJS_PUBLIC_KEY.substring(EMAILJS_PUBLIC_KEY.length - 3));
+  // console.log('----------------------');
   
   try {
     // EmailJS template parameters - providing all possible recipient fields
@@ -46,7 +46,7 @@ export const sendReservationEmail = async (data: EmailData): Promise<boolean> =>
       recipient_email: data.recipientEmail
     };
     
-    console.log('Parâmetros do template:', templateParams);
+    //console.log('Parâmetros do template:', templateParams);
     
     // Send using EmailJS API
     const response = await emailjs.send(
@@ -69,10 +69,10 @@ export const sendReservationEmail = async (data: EmailData): Promise<boolean> =>
 
 // Function to notify the site owner about the reservation
 export const sendOwnerNotificationEmail = async (data: EmailData): Promise<boolean> => {
-  console.log('Enviando notificação para o proprietário com estes dados:', data);
+  //console.log('Enviando notificação para o proprietário com estes dados:', data);
   console.log('----------------------');
-  console.log('Para: viniciuscaioml@gmail.com');
-  console.log('De: ' + data.senderName);
+  // console.log('Para: viniciuscaioml@gmail.com');
+  // console.log('De: ' + data.senderName);
   console.log('Presente reservado: ' + data.giftName);
   console.log('----------------------');
   
@@ -95,7 +95,7 @@ export const sendOwnerNotificationEmail = async (data: EmailData): Promise<boole
       recipient_email: 'viniciuscaioml@gmail.com'
     };
     
-    console.log('Parâmetros do template:', templateParams);
+    //console.log('Parâmetros do template:', templateParams);
     
     // Send using EmailJS API
     const response = await emailjs.send(
