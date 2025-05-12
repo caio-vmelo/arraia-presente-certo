@@ -9,7 +9,71 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      gifts: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          price: number | null
+          store_url: string | null
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          price?: number | null
+          store_url?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          price?: number | null
+          store_url?: string | null
+        }
+        Relationships: []
+      }
+      reservations: {
+        Row: {
+          created_at: string
+          gift_id: string
+          id: string
+          reserver_email: string
+          reserver_name: string
+        }
+        Insert: {
+          created_at?: string
+          gift_id: string
+          id?: string
+          reserver_email: string
+          reserver_name: string
+        }
+        Update: {
+          created_at?: string
+          gift_id?: string
+          id?: string
+          reserver_email?: string
+          reserver_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reservations_gift_id_fkey"
+            columns: ["gift_id"]
+            isOneToOne: false
+            referencedRelation: "gifts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
