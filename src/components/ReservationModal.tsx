@@ -73,18 +73,9 @@ const ReservationModal: React.FC<ReservationModalProps> = ({
       setIsSubmitting(false);
     }
   };
-
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Reservar presente</DialogTitle>
-          <DialogDescription className="text-amber-700">
-            Por favor, reserve este presente apenas se você realmente pretende comprá-lo, 
-            para não impedir que outra pessoa possa dar este presente.
-          </DialogDescription>
-        </DialogHeader>
-        
         <Alert className="bg-yellow-50 border-yellow-200 mb-4">
           <AlertCircle className="h-4 w-4 text-yellow-600" />
           <AlertDescription className="text-yellow-700">
@@ -92,14 +83,12 @@ const ReservationModal: React.FC<ReservationModalProps> = ({
             Caso contrário, outra pessoa pode perder a oportunidade de presentear os noivos.
           </AlertDescription>
         </Alert>
-        
         <Alert className="bg-blue-50 border-blue-200 mb-4">
           <Landmark className="h-4 w-4 text-blue-600" />
           <AlertDescription className="text-blue-600">
             Caso prefira contribuir com um valor em dinheiro, você pode fazer um PIX para: <span className="font-semibold select-all">viniciuscaioml@gmail.com</span>
           </AlertDescription>
         </Alert>
-        
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
