@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Gift } from '@/types/gift';
@@ -10,7 +11,7 @@ interface GiftItemProps {
 }
 
 const GiftItem: React.FC<GiftItemProps> = ({ gift, onReserve }) => {
-  const { id, name, price, imageUrl, description, category, storeUrl, isReserved, reservedBy } = gift;
+  const { id, name, price, image_url, description, category, store_url, isReserved, reservedBy } = gift;
 
   const handleReserveClick = () => {
     if (!isReserved) {
@@ -22,7 +23,7 @@ const GiftItem: React.FC<GiftItemProps> = ({ gift, onReserve }) => {
     <div className={`bg-white rounded-lg shadow-md overflow-hidden border-2 transition-all duration-300 ${isReserved ? 'border-gray-300' : 'border-orange-400 hover:shadow-lg'}`}>
       <div className="aspect-square overflow-hidden relative">
         <img 
-          src={imageUrl} 
+          src={image_url} 
           alt={name}
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
         />
@@ -55,7 +56,7 @@ const GiftItem: React.FC<GiftItemProps> = ({ gift, onReserve }) => {
         
         <div className="space-y-2">
           <a 
-            href={storeUrl} 
+            href={store_url} 
             target="_blank" 
             rel="noopener noreferrer" 
             className="flex items-center justify-center w-full text-blue-600 hover:text-blue-800 text-sm font-medium"

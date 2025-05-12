@@ -1,11 +1,10 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { corsHeaders } from "../_shared/cors.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.38.4";
 
 const EMAILJS_SERVICE_ID = Deno.env.get("EMAILJS_SERVICE_ID") || "";
 const EMAILJS_TEMPLATE_ID = Deno.env.get("EMAILJS_TEMPLATE_ID") || "";
-const EMAILJS_USER_ID = Deno.env.get("EMAILJS_USER_ID") || "";
+const EMAILJS_PUBLIC_KEY = Deno.env.get("EMAILJS_PUBLIC_KEY") || "";
 const EMAILJS_OWNER_TEMPLATE_ID = Deno.env.get("EMAILJS_OWNER_TEMPLATE_ID") || "";
 
 serve(async (req) => {
@@ -36,7 +35,7 @@ serve(async (req) => {
       emailParams = {
         service_id: EMAILJS_SERVICE_ID,
         template_id: EMAILJS_TEMPLATE_ID,
-        user_id: EMAILJS_USER_ID,
+        user_id: EMAILJS_PUBLIC_KEY,
         template_params: {
           to_email: data.recipientEmail,
           from_name: "Chá de Panela Junino",
@@ -46,15 +45,18 @@ serve(async (req) => {
         }
       };
     } else if (type === "notification") {
+      // Se você não tiver um template específico para notificação do proprietário, 
+      // você pode usar o mesmo template com mensagem diferente
       emailParams = {
         service_id: EMAILJS_SERVICE_ID,
-        template_id: EMAILJS_OWNER_TEMPLATE_ID,
-        user_id: EMAILJS_USER_ID,
+        template_id: EMAILJS_TEMPLATE_ID, // Usando o mesmo template por enquanto
+        user_id: EMAILJS_PUBLIC_KEY,
         template_params: {
+          to_email: "seu-email@example.com", // Email do proprietário do site
           from_name: data.senderName,
+          to_name: "Proprietário",
           gift_name: data.giftName,
-          reply_to: data.recipientEmail,
-          message: `${data.senderName} reservou o presente "${data.giftName}"`
+          message: `${data.senderName} (${data.recipientEmail}) reservou o presente "${data.giftName}"`
         }
       };
     } else {
@@ -66,6 +68,8 @@ serve(async (req) => {
         }
       );
     }
+
+    console.log("Enviando email com os parâmetros:", JSON.stringify(emailParams));
 
     const response = await fetch(url, {
       method: "POST",
@@ -89,6 +93,7 @@ serve(async (req) => {
     );
     
   } catch (error) {
+    console.error("Error in send-email function:", error);
     return new Response(
       JSON.stringify({ error: error.message }),
       { 
