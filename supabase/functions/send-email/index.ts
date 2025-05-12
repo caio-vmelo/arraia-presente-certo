@@ -45,16 +45,14 @@ serve(async (req) => {
         }
       };
     } else if (type === "notification") {
-      // Se você não tiver um template específico para notificação do proprietário, 
-      // você pode usar o mesmo template com mensagem diferente
       emailParams = {
         service_id: EMAILJS_SERVICE_ID,
-        template_id: EMAILJS_TEMPLATE_ID, // Usando o mesmo template por enquanto
+        template_id: EMAILJS_TEMPLATE_ID,
         user_id: EMAILJS_PUBLIC_KEY,
         template_params: {
-          to_email: "seu-email@example.com", // Email do proprietário do site
+          to_email: "viniciuscaioml@gmail.com",  // Email do proprietário do site
           from_name: data.senderName,
-          to_name: "Proprietário",
+          to_name: "Caio",
           gift_name: data.giftName,
           message: `${data.senderName} (${data.recipientEmail}) reservou o presente "${data.giftName}"`
         }
@@ -79,9 +77,12 @@ serve(async (req) => {
       body: JSON.stringify(emailParams)
     });
 
+    console.log("Resposta do EmailJS:", response.status, response.statusText);
+
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(`Error sending email: ${JSON.stringify(errorData)}`);
+      const errorData = await response.text();
+      console.error("Erro na resposta do EmailJS:", errorData);
+      throw new Error(`Error sending email: ${errorData}`);
     }
 
     return new Response(

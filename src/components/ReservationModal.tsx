@@ -1,4 +1,4 @@
-// src/components/ReservationModal.tsx
+
 import React, { useState } from 'react';
 import {
   Dialog,
@@ -6,10 +6,13 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
+  DialogDescription,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { AlertCircle, Landmark } from 'lucide-react';
 
 interface ReservationModalProps {
   isOpen: boolean;
@@ -76,7 +79,19 @@ const ReservationModal: React.FC<ReservationModalProps> = ({
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Reservar presente</DialogTitle>
+          <DialogDescription className="text-amber-700">
+            Por favor, reserve este presente apenas se você realmente pretende comprá-lo, 
+            para não impedir que outra pessoa possa dar este presente.
+          </DialogDescription>
         </DialogHeader>
+        
+        <Alert className="bg-blue-50 border-blue-200 mb-4">
+          <AlertCircle className="h-4 w-4 text-blue-600" />
+          <AlertDescription className="text-blue-600">
+            Caso prefira contribuir com um valor em dinheiro, você pode fazer um PIX para: <span className="font-semibold">viniciuscaioml@gmail.com</span>
+          </AlertDescription>
+        </Alert>
+        
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
